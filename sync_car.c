@@ -38,3 +38,17 @@ void station_on_board(struct station *station){
     pthread_cond_signal(&station->cond_carro);
     pthread_mutex_unlock(&station->mutex);
 }
+
+void station_load_car(struct station *station, int count){
+    pthread_mutex_lock(&station->mutex);
+    station->carro_presente =1;
+    station->vagas = count;
+     pthread_cond_broadcast(&station->cond_passageiros);
+
+    while (! (station->embarcando == 0 && (station->esperando == 0 || station->vagas ==0))){
+        pthread_cond_wait(&station->cond_carro, &station->mutex);
+    }
+
+    station->carro_presente =0;
+    pthread_mutex_unlock(&station->mutex);
+}
