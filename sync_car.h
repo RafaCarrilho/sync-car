@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-3.0
 #ifndef SYNC_CAR_H
 #define SYNC_CAR_H
 
@@ -8,6 +7,7 @@ struct station {
     int esperando;
     int vagas;
     int embarcando;
+    int carro_presente;
 
     pthread_mutex_t mutex;
 
