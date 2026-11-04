@@ -30,3 +30,11 @@ void station_wait_for_car (struct station *station){
     pthread_mutex_unlock(&station->mutex);
 
 }
+
+void station_on_board(struct station *station){
+    pthread_mutex_lock(&station->mutex);
+    station->embarcando --;
+
+    pthread_cond_signal(&station->cond_carro);
+    pthread_mutex_unlock(&station->mutex);
+}
